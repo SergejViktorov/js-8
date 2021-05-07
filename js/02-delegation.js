@@ -9,11 +9,13 @@ const container = document.querySelector('.js-container');
 container.addEventListener('click', onClick);
 
 function onClick(evt) {
-  if (evt.target.nodeName !== 'BUTTON') {
-    return;
-  }
-
   console.log(evt.target.textContent);
+  console.log(evt.target.nodeName);
+
+  //   if (evt.target.nodeName !== 'BUTTON') {
+  //     return;
+  //   }
+  //   console.log(evt.target.textContent);
 }
 
 /*

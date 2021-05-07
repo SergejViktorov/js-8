@@ -14,61 +14,36 @@ const colors = [
   { hex: '#607d8b', rgb: '96,125,139' },
 ];
 
-const paletteContainer = document.querySelector('.js-palette');
-const cardsMarkup = createColorCardsMarkup(colors);
+const palette = document.querySelector('.js-palette');
+const murkUp = creatColorsCardMurkUp(colors);
 
-paletteContainer.insertAdjacentHTML('beforeend', cardsMarkup);
+palette.insertAdjacentHTML('beforeend', murkUp);
 
-paletteContainer.addEventListener('click', onPaletteContainerClick);
+palette.addEventListener('click', onColorClick);
+console.log(palette);
 
-function createColorCardsMarkup(colors) {
+function creatColorsCardMurkUp(colors) {
   return colors
     .map(({ hex, rgb }) => {
-      return `
-    <div class="color-card">
-     <div><div><div> <div
-     class="color-swatch"
-     data-hex="${hex}"
-     data-rgb="${rgb}"
-     style="background-color: ${hex}"
-   ></div></div></div></div>
-      <div class="color-meta">
-        <p>HEX: ${hex}</p>
-        <p>RGB: ${rgb}</p>
-      </div>
+      return `<div class="color-card">
+    <div><div><div> <div
+      class="color-swatch"
+      data-hex="${hex}"
+      data-rgb="${rgb}"
+      style="background-color: ${hex}"
+    ></div></div></div></div>
+    <div class="color-meta">
+      <p>HEX: ${hex}</p>
+      <p>RGB: ${rgb}</p>
     </div>
-    `;
+  </div>`;
     })
     .join('');
 }
 
-function onPaletteContainerClick(evt) {
-  const isColorSwatchEl = evt.target.classList.contains('color-swatch');
-
-  if (!isColorSwatchEl) {
+function onColorClick(e) {
+  if (!e.target.classList.contains('color-swatch')) {
     return;
   }
-
-  const swatchEl = evt.target;
-  const parentColorCard = swatchEl.closest('.color-card');
-
-  removeActiveCardClass();
-  addActiveCardClass(parentColorCard);
-  setBodyBgColor(swatchEl.dataset.hex);
-}
-
-function setBodyBgColor(color) {
-  document.body.style.backgroundColor = color;
-}
-
-function removeActiveCardClass() {
-  const currentActiveCard = document.querySelector('.color-card.is-active');
-
-  if (currentActiveCard) {
-    currentActiveCard.classList.remove('is-active');
-  }
-}
-
-function addActiveCardClass(card) {
-  card.classList.add('is-active');
+  console.log(e.target.dataset.hex);
 }
