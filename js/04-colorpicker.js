@@ -14,15 +14,13 @@ const colors = [
   { hex: '#607d8b', rgb: '96,125,139' },
 ];
 
-const palette = document.querySelector('.js-palette');
-const murkUp = creatColorsCardMurkUp(colors);
+const paletteColors = document.querySelector('.js-palette');
+const markUp = colorsMarkUp(colors);
+paletteColors.insertAdjacentHTML('beforeend', markUp);
+paletteColors.addEventListener('click', onColorClick);
+// const colorEl = document.querySelector('.color-swatch');
 
-palette.insertAdjacentHTML('beforeend', murkUp);
-
-palette.addEventListener('click', onColorClick);
-console.log(palette);
-
-function creatColorsCardMurkUp(colors) {
+function colorsMarkUp(colors) {
   return colors
     .map(({ hex, rgb }) => {
       return `<div class="color-card">
@@ -45,5 +43,27 @@ function onColorClick(e) {
   if (!e.target.classList.contains('color-swatch')) {
     return;
   }
-  console.log(e.target.dataset.hex);
+
+  removeActivClass();
+
+  const parentColor = e.target.closest('.color-card');
+  addClass(parentColor);
+
+  setBodyBgColor(e.target.dataset.hex);
+}
+
+function addClass(card) {
+  card.classList.add('is-active');
+}
+
+function removeActivClass() {
+  const isActive = document.querySelector('.color-card.is-active');
+
+  if (isActive) {
+    isActive.classList.remove('is-active');
+  }
+}
+
+function setBodyBgColor(color) {
+  document.body.style.backgroundColor = color;
 }
